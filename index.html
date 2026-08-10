@@ -78,17 +78,11 @@
       opacity: 0;
     }
 
-    .scene svg {
+    .scene-illustration {
+      display: block;
       width: 100%;
       height: auto;
-      overflow: visible;
-    }
-
-    /* SVG paths colour classes (driven by anime.js) */
-    .outline { fill: none; stroke: #111; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
-    .fill-surface { fill: var(--surface); }
-    .fill-screen  { fill: #1e1e2e; }
-    .animated-path { fill: none; stroke: #111; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+      filter: drop-shadow(0 16px 40px rgba(0, 212, 200, 0.18));
 
     /* ── Status badge ── */
     .status-badge {
@@ -219,51 +213,11 @@
 
     <!-- SVG Desktop Scene -->
     <div class="scene" id="scene">
-      <svg viewBox="0 0 520 360" xmlns="http://www.w3.org/2000/svg" aria-label="Illustration of a desktop computer">
-
-        <!-- Desk surface -->
-        <rect class="fill-surface outline" x="20" y="300" width="480" height="40" rx="4"/>
-
-        <!-- Monitor stand -->
-        <rect class="fill-surface outline" x="235" y="270" width="50" height="32" rx="2"/>
-        <rect class="fill-surface outline" x="210" y="298" width="100" height="8" rx="3"/>
-
-        <!-- Monitor outer frame -->
-        <rect class="fill-surface animated-path" id="mon-frame" x="60" y="60" width="400" height="215" rx="12"/>
-
-        <!-- Monitor screen -->
-        <rect class="fill-screen" x="72" y="72" width="376" height="190" rx="6"/>
-
-        <!-- Screen "content" lines (decorative) -->
-        <rect class="animated-path" id="line1" x="92"  y="92"  width="160" height="8"  rx="4"/>
-        <rect class="animated-path" id="line2" x="92"  y="108" width="100" height="6"  rx="3"/>
-        <rect class="animated-path" id="line3" x="92"  y="130" width="200" height="6"  rx="3"/>
-        <rect class="animated-path" id="line4" x="92"  y="144" width="140" height="6"  rx="3"/>
-        <rect class="animated-path" id="line5" x="92"  y="158" width="180" height="6"  rx="3"/>
-
-        <!-- Screen "icon" placeholder top-right -->
-        <circle class="animated-path" id="icon-circle" cx="390" cy="140" r="28"/>
-        <polyline class="animated-path" id="icon-arrow" points="380,147 390,133 400,147"/>
-        <line class="animated-path" id="icon-line" x1="390" y1="133" x2="390" y2="155"/>
-
-        <!-- Power LED -->
-        <circle id="led" cx="260" cy="284" r="4" fill="#333"/>
-
-        <!-- Keyboard -->
-        <rect class="fill-surface animated-path" id="keyboard" x="130" y="316" width="260" height="16" rx="4"/>
-
-        <!-- Small key accents -->
-        <rect class="animated-path" id="key1" x="142" y="320" width="14" height="8" rx="2"/>
-        <rect class="animated-path" id="key2" x="162" y="320" width="14" height="8" rx="2"/>
-        <rect class="animated-path" id="key3" x="182" y="320" width="30" height="8" rx="2"/>
-        <rect class="animated-path" id="key4" x="346" y="320" width="14" height="8" rx="2"/>
-        <rect class="animated-path" id="key5" x="366" y="320" width="14" height="8" rx="2"/>
-
-        <!-- Mouse -->
-        <rect class="fill-surface animated-path" id="mouse" x="410" y="308" width="36" height="26" rx="8"/>
-        <line class="animated-path" id="mouse-line" x1="428" y1="308" x2="428" y2="319"/>
-
-      </svg>
+      <img
+        class="scene-illustration"
+        src="producerSet.svg"
+        alt="Illustration of a producer desk setup"
+      />
     </div>
 
     <!-- Waiting-room status -->
@@ -329,56 +283,6 @@
       duration: 1400,
       loop: true,
       easing: 'easeInOutSine'
-    });
-
-    /* ── SVG animated paths colour cycle ──
-       Black outline → Yellow → Teal → Salmon → loop
-    */
-    const COLORS = {
-      base:   '#111111',
-      yellow: '#f5d600',
-      teal:   '#00d4c8',
-      salmon: '#ff8070',
-    };
-
-    const animatedPaths = document.querySelectorAll('.animated-path');
-
-    function buildColorTimeline() {
-      const tl = anime.timeline({
-        targets: animatedPaths,
-        loop: true,
-        easing: 'easeInOutSine'
-      });
-
-      tl.add({ stroke: COLORS.yellow, duration: 1200, delay: anime.stagger(60) })
-        .add({ stroke: COLORS.teal,   duration: 1200, delay: anime.stagger(60) })
-        .add({ stroke: COLORS.salmon, duration: 1200, delay: anime.stagger(60) })
-        .add({ stroke: COLORS.base,   duration:  900, delay: anime.stagger(40) });
-
-      return tl;
-    }
-
-    // Start after intro
-    setTimeout(buildColorTimeline, 800);
-
-    /* ── Monitor LED blink ── */
-    anime({
-      targets: '#led',
-      fill: ['#333', '#00d4c8', '#333'],
-      duration: 2000,
-      loop: true,
-      easing: 'easeInOutQuad',
-      delay: 1000
-    });
-
-    /* ── Keyboard / mouse subtle float ── */
-    anime({
-      targets: ['#keyboard', '#mouse'],
-      translateY: [0, -3, 0],
-      duration: 3200,
-      loop: true,
-      easing: 'easeInOutSine',
-      delay: anime.stagger(400)
     });
 
     /* ── Scene gentle levitation ── */
