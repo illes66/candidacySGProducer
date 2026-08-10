@@ -193,40 +193,6 @@
       opacity: 0;
     }
 
-    /* ── Custom cursor ── */
-    *, *::before, *::after { cursor: none !important; }
-
-    #cursor-glow {
-      pointer-events: none;
-      position: fixed;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,140,60,0.85) 0%, rgba(255,100,30,0.5) 45%, transparent 70%);
-      box-shadow: 0 0 18px 6px rgba(255,120,40,0.45);
-      transform: translate(-50%, -50%);
-      z-index: 9999;
-      transition: transform 0.08s ease;
-    }
-
-    /* ── SVG inline ── */
-    .scene svg {
-      display: block;
-      width: 100%;
-      height: auto;
-      filter: drop-shadow(0 16px 40px rgba(0, 212, 200, 0.18));
-    }
-
-    /* ── Drawer hover ── */
-    #path843, #path845 {
-      cursor: pointer !important;
-      transition: fill 0.25s ease;
-    }
-    #path843:hover, #path845:hover {
-      fill: #ff8070;
-    }
-
-
     /* ── Responsive ── */
     @media (max-width: 480px) {
       .page { gap: 2rem; padding: 2rem 1rem; }
@@ -246,59 +212,14 @@
       </p>
     </header>
 
-    <!-- SVG Desktop Scene (inlined for JS interactivity) -->
-    <div class="scene" id="scene" role="img" aria-label="Illustration of a producer desk setup">
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-           viewBox="0 0 210 297" version="1.1" id="producerSVG">
-        <defs>
-          <linearGradient id="lg-teal" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" style="stop-color:#00d4c8;stop-opacity:1;"/>
-            <stop offset="1" style="stop-color:#26e198;stop-opacity:1;"/>
-          </linearGradient>
-        </defs>
-        <g id="layer1">
-          <g id="g880" transform="matrix(0.35277778,0,0,0.35277778,-98.74396,22.042117)">
-
-            <!-- Monitor base / stand -->
-            <g id="Layer_1" transform="translate(-4.1505951,-131.95107)">
-              <path d="m 311.77,420.945 h 550.744 c 9.38,0 16.984,7.604 16.984,16.984 v 62.232 c 0,9.38 -7.604,16.984 -16.984,16.984 h -550.744 c -9.38,0 -16.984,-7.604 -16.984,-16.984 v -62.232 c 0,-9.38 7.604,-16.984 16.984,-16.984 z"
-                   stroke="#2a2a3a" stroke-width="2" fill="#1a1a2a" id="path841"/>
-              <!-- Left drawer -->
-              <path d="m 353.116,443.59 h 178.402 c 14.059,0 25.455,11.396 25.455,25.455 v 0 c 0,14.058 -11.396,25.455 -25.455,25.455 h -178.402 c -14.059,0 -25.455,-11.397 -25.455,-25.455 v 0 c 0,-14.059 11.396,-25.455 25.455,-25.455 z"
-                   stroke="#00d4c8" stroke-width="3" fill="#0d0d14" id="path843"/>
-              <!-- Right drawer -->
-              <path d="m 645.376,443.59 h 173.47 c 14.058,0 25.455,11.396 25.455,25.455 v 0 c 0,14.058 -11.397,25.455 -25.455,25.455 h -173.47 c -14.059,0 -25.455,-11.397 -25.455,-25.455 v 0 c 0,-14.059 11.396,-25.455 25.455,-25.455 z"
-                   stroke="#f5d600" stroke-width="3" fill="#0d0d14" id="path845"/>
-            </g>
-
-            <!-- Chair / monitor body -->
-            <g id="Layer_2" transform="translate(773.57142,25.714286)">
-              <path d="m 1030.5937,-337.93357 c 2.131,19.483 1.043,12.736 1.043,12.736 4.08,105.648 -658.06299,88.566 -603.11899,6.522 l 9.303,-18.43 c -12.541,-111.1175 76.51,-23.967 91.123,-23.912 l 404.44,4.032 c 49.904,-44.3584 86.14099,-82.1641 97.20999,19.052 z"
-                   stroke="#00d4c8" stroke-width="3" fill="#16161f" id="path858"/>
-              <path d="m 23.882006,375.88829 c 8.368,0 -15.1530004,21.122 -15.1530004,29.49 l -3.024,287.853 c 41.2740004,28.061 -19.5749996,27.025 -25.9659996,18.141 l -35.25,-333.064 c 0,-8.369 79.393,-2.42 79.393,-2.42 z"
-                   stroke="#2a2a3a" stroke-width="3" fill="#26e198" opacity="0.7" id="path860"/>
-              <path d="m -387.63509,376.07617 c -9.61361,0 17.40858,21.122 17.40858,29.49 l 3.47414,287.853 c -47.4178,28.061 22.48881,27.025 29.83114,18.141 l 40.4971,-333.064 c 0,-8.369 -91.21096,-2.42 -91.21096,-2.42 z"
-                   stroke="#2a2a3a" stroke-width="3" fill="#26e198" opacity="0.7" id="path860-3"/>
-              <path d="m -420.01819,-37.765625 h 433.032693 c 15.269259,0 27.646279,25.459645 27.646279,56.868646 v 111.927239 c 0,31.40901 -12.37702,56.86864 -27.646279,56.86864 h -433.032693 c -15.26751,0 -27.64452,-25.45963 -27.64452,-56.86864 v -111.927239 c 0,-31.409001 12.37701,-56.868646 27.64452,-56.868646 z"
-                   stroke="#00d4c8" stroke-width="4" fill="#0d1a2a" id="path854-0"/>
-              <!-- skill text display area (filled via JS) -->
-              <foreignObject id="skill-fo" x="-405" y="-120" width="440" height="240" opacity="0">
-                <div xmlns="http://www.w3.org/1999/xhtml" id="skill-fo-inner" style="color:#f0f0f0;font-family:'Segoe UI',sans-serif;padding:12px 16px;line-height:1.5;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;">
-                  <div id="svgSkillIcon" style="font-size:1.8rem;margin-bottom:6px;"></div>
-                  <div id="svgSkillTitle" style="font-size:.85rem;font-weight:700;color:#ff8070;margin-bottom:6px;"></div>
-                  <div id="svgSkillBody" style="font-size:.72rem;color:#c0c0d8;"></div>
-                </div>
-              </foreignObject>
-            </g>
-
-          </g>
-        </g>
-      </svg>
+    <!-- SVG Desktop Scene -->
+    <div class="scene" id="scene">
+      <img
+        class="scene-illustration"
+        src="producerSet.svg"
+        alt="Illustration of a producer desk setup"
+      />
     </div>
-
-
-    <!-- Custom cursor -->
-    <div id="cursor-glow" aria-hidden="true"></div>
 
     <!-- Waiting-room status -->
     <div class="status-badge" id="statusBadge">
@@ -373,76 +294,6 @@
       loop: true,
       easing: 'easeInOutSine',
       delay: 900
-    });
-
-    /* ── Custom cursor ── */
-    const cursor = document.getElementById('cursor-glow');
-    document.addEventListener('mousemove', e => {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top  = e.clientY + 'px';
-    });
-
-    /* ── Skill dialogs ── */
-    const skills = [
-      { icon: '🎮', title: 'Game Production End-to-End', body: '8+ years shipping titles from GDD to gold master — defining milestones, managing backlogs, and keeping teams unblocked.' },
-      { icon: '📋', title: 'Agile & Scrum Leadership', body: 'Experienced Scrum Master running sprints, retros and velocity reviews. Confident switching to Kanban or hybrid flows when needed.' },
-      { icon: '🤝', title: 'Cross-Functional Collaboration', body: 'Fluent in the languages of art, code, and design — bridging disciplines so everyone ships the same vision.' },
-      { icon: '📊', title: 'Data-Driven Decisions', body: 'Comfortable with LiveOps dashboards, A/B test readouts and retention KPIs. I turn telemetry into actionable priorities.' },
-      { icon: '🔊', title: 'Audio & Narrative Production', body: 'Produced full sound design and VO pipelines — from brief to final integration — for narrative-heavy mobile titles.' },
-      { icon: '🗺️', title: 'Roadmap & Stakeholder Management', body: 'Crafted multi-quarter roadmaps and presented them to C-suite, publishers, and investors with clarity and confidence.' },
-      { icon: '⚠️', title: 'Risk Management', body: 'Early-warning systems, scope gates, and honest status reports — I surface risks before they become crises.' },
-      { icon: '🌍', title: 'Remote & Distributed Teams', body: 'Led 20-person teams across 4 time-zones, using async-first rituals to maintain momentum without Zoom fatigue.' },
-      { icon: '🕹️', title: 'Unity Pipeline Experience', body: 'Deep familiarity with Unity build pipelines, asset bundles, and CI/CD for mobile — from prototype to store submission.' }
-    ];
-
-    let skillIndex = 0;
-    let hideTimer = null;
-
-    function showSkill() {
-      const s = skills[skillIndex % skills.length];
-      skillIndex++;
-
-      document.getElementById('svgSkillIcon').textContent  = s.icon;
-      document.getElementById('svgSkillTitle').textContent = s.title;
-      document.getElementById('svgSkillBody').textContent  = s.body;
-
-      const fo = document.getElementById('skill-fo');
-      clearTimeout(hideTimer);
-
-      anime({ targets: fo, opacity: [0, 1], duration: 350, easing: 'easeOutQuad' });
-
-      hideTimer = setTimeout(() => {
-        anime({ targets: fo, opacity: [1, 0], duration: 500, easing: 'easeInQuart' });
-      }, 3500);
-    }
-
-    /* ── Drawer hover animation (anime.js color tween) ── */
-    const drawers = ['#path843', '#path845'];
-    const drawerOriginalFill = { '#path843': '#0d0d14', '#path845': '#0d0d14' };
-
-    drawers.forEach(sel => {
-      const el = document.querySelector(sel);
-      if (!el) return;
-
-      el.addEventListener('mouseenter', () => {
-        anime({
-          targets: el,
-          fill: '#ff8070',
-          duration: 220,
-          easing: 'easeOutQuad'
-        });
-      });
-
-      el.addEventListener('mouseleave', () => {
-        anime({
-          targets: el,
-          fill: drawerOriginalFill[sel],
-          duration: 350,
-          easing: 'easeOutQuad'
-        });
-      });
-
-      el.addEventListener('click', showSkill);
     });
   </script>
 </body>
