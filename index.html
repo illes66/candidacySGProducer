@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Illes Álvarez · Producer Candidacy @ Say Games</title>
+  <style>
+    /* ── Reset & base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0d0d14;
+      --surface:  #16161f;
+      --yellow:   #f5d600;
+      --teal:     #00d4c8;
+      --salmon:   #ff8070;
+      --white:    #f0f0f0;
+      --muted:    #7a7a9a;
+      --border:   #2a2a3a;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── Layout ── */
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      padding: 3rem 1.5rem;
+    }
+
+    /* ── Header ── */
+    header {
+      text-align: center;
+      opacity: 0;
+    }
+
+    .tag-line {
+      font-size: .75rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: .6rem;
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--white);
+    }
+
+    h1 span {
+      color: var(--yellow);
+    }
+
+    .subtitle {
+      margin-top: .8rem;
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 480px;
+      line-height: 1.6;
+    }
+
+    /* ── SVG scene ── */
+    .scene {
+      position: relative;
+      width: min(520px, 90vw);
+      opacity: 0;
+    }
+
+    .scene svg {
+      width: 100%;
+      height: auto;
+      overflow: visible;
+    }
+
+    /* SVG paths colour classes (driven by anime.js) */
+    .outline { fill: none; stroke: #111; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    .fill-surface { fill: var(--surface); }
+    .fill-screen  { fill: #1e1e2e; }
+    .animated-path { fill: none; stroke: #111; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ── Status badge ── */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: .45rem 1rem;
+      font-size: .8rem;
+      color: var(--muted);
+      opacity: 0;
+    }
+
+    .pulse-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--yellow);
+      flex-shrink: 0;
+    }
+
+    /* ── CTA area ── */
+    .cta-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      opacity: 0;
+    }
+
+    .btn-download {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      background: var(--yellow);
+      color: #0d0d14;
+      font-weight: 700;
+      font-size: .95rem;
+      padding: .8rem 2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      letter-spacing: .03em;
+      transition: transform .15s, box-shadow .15s;
+      overflow: hidden;
+    }
+
+    .btn-download::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,.15);
+      opacity: 0;
+      transition: opacity .15s;
+    }
+
+    .btn-download:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(245,214,0,.35); }
+    .btn-download:hover::after { opacity: 1; }
+    .btn-download:active { transform: translateY(0); }
+
+    /* disabled state while exe not ready */
+    .btn-download[aria-disabled="true"] {
+      background: var(--surface);
+      color: var(--muted);
+      border: 1px dashed var(--border);
+      cursor: not-allowed;
+    }
+    .btn-download[aria-disabled="true"]:hover { transform: none; box-shadow: none; }
+
+    .cta-note {
+      font-size: .75rem;
+      color: var(--muted);
+    }
+
+    /* ── About section ── */
+    .about {
+      max-width: 520px;
+      text-align: center;
+      opacity: 0;
+    }
+
+    .about h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: .6rem;
+      color: var(--teal);
+    }
+
+    .about p {
+      font-size: .9rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .about a {
+      color: var(--teal);
+      text-decoration: none;
+    }
+    .about a:hover { text-decoration: underline; }
+
+    /* ── Footer ── */
+    footer {
+      margin-top: 1rem;
+      font-size: .75rem;
+      color: var(--border);
+      opacity: 0;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 480px) {
+      .page { gap: 2rem; padding: 2rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+
+    <!-- Header -->
+    <header>
+      <p class="tag-line">Producer Candidacy · Say Games</p>
+      <h1>Hey <span>Say Games</span> 👋</h1>
+      <p class="subtitle">
+        I'm Illes Álvarez, a Senior Producer with a passion for crafting games 
+        that people actually love. I built this page (and a playable CV) just for you.
+      </p>
+    </header>
+
+    <!-- SVG Desktop Scene -->
+    <div class="scene" id="scene">
+      <svg viewBox="0 0 520 360" xmlns="http://www.w3.org/2000/svg" aria-label="Illustration of a desktop computer">
+
+        <!-- Desk surface -->
+        <rect class="fill-surface outline" x="20" y="300" width="480" height="40" rx="4"/>
+
+        <!-- Monitor stand -->
+        <rect class="fill-surface outline" x="235" y="270" width="50" height="32" rx="2"/>
+        <rect class="fill-surface outline" x="210" y="298" width="100" height="8" rx="3"/>
+
+        <!-- Monitor outer frame -->
+        <rect class="fill-surface animated-path" id="mon-frame" x="60" y="60" width="400" height="215" rx="12"/>
+
+        <!-- Monitor screen -->
+        <rect class="fill-screen" x="72" y="72" width="376" height="190" rx="6"/>
+
+        <!-- Screen "content" lines (decorative) -->
+        <rect class="animated-path" id="line1" x="92"  y="92"  width="160" height="8"  rx="4"/>
+        <rect class="animated-path" id="line2" x="92"  y="108" width="100" height="6"  rx="3"/>
+        <rect class="animated-path" id="line3" x="92"  y="130" width="200" height="6"  rx="3"/>
+        <rect class="animated-path" id="line4" x="92"  y="144" width="140" height="6"  rx="3"/>
+        <rect class="animated-path" id="line5" x="92"  y="158" width="180" height="6"  rx="3"/>
+
+        <!-- Screen "icon" placeholder top-right -->
+        <circle class="animated-path" id="icon-circle" cx="390" cy="140" r="28"/>
+        <polyline class="animated-path" id="icon-arrow" points="380,147 390,133 400,147"/>
+        <line class="animated-path" id="icon-line" x1="390" y1="133" x2="390" y2="155"/>
+
+        <!-- Power LED -->
+        <circle id="led" cx="260" cy="284" r="4" fill="#333"/>
+
+        <!-- Keyboard -->
+        <rect class="fill-surface animated-path" id="keyboard" x="130" y="316" width="260" height="16" rx="4"/>
+
+        <!-- Small key accents -->
+        <rect class="animated-path" id="key1" x="142" y="320" width="14" height="8" rx="2"/>
+        <rect class="animated-path" id="key2" x="162" y="320" width="14" height="8" rx="2"/>
+        <rect class="animated-path" id="key3" x="182" y="320" width="30" height="8" rx="2"/>
+        <rect class="animated-path" id="key4" x="346" y="320" width="14" height="8" rx="2"/>
+        <rect class="animated-path" id="key5" x="366" y="320" width="14" height="8" rx="2"/>
+
+        <!-- Mouse -->
+        <rect class="fill-surface animated-path" id="mouse" x="410" y="308" width="36" height="26" rx="8"/>
+        <line class="animated-path" id="mouse-line" x1="428" y1="308" x2="428" y2="319"/>
+
+      </svg>
+    </div>
+
+    <!-- Waiting-room status -->
+    <div class="status-badge" id="statusBadge">
+      <div class="pulse-dot" id="pulseDot"></div>
+      <span>Playable almost ready — come back soon ✨</span>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-area" id="ctaArea">
+      <a
+        class="btn-download"
+        id="btnDownload"
+        href="#"
+        aria-disabled="true"
+        title="Coming soon!"
+        onclick="return false;"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download Playable CV (.exe)
+      </a>
+      <p class="cta-note">Windows · Unity build · ~50 MB · coming soon</p>
+    </div>
+
+    <!-- About -->
+    <div class="about" id="aboutSection">
+      <h2>Meanwhile…</h2>
+      <p>
+        I've been heads-down building a Unity playable that walks through my production experience 
+        interactively. You can also browse the web version right now:<br/>
+        <a href="Web-2D-JS/index.html">▶ Web 2D Playable CV</a>
+      </p>
+      <p style="margin-top:.6rem">
+        Questions? Reach me at
+        <a href="mailto:illes.alvarez@gmail.com">illes.alvarez@gmail.com</a>
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">Made with 💙 for Say Games · 2026</footer>
+
+  </main>
+
+  <!-- Anime.js v3 CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js" integrity="sha512-aNMyYYxdIxIaot0Y1/PLuEu3eipGCmsEUBrUq+7aVyDGk2z3C1W6KMvXTCWYcNkux2OtSWzNLrz+ZFpBrUPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    /* ── Intro stagger ── */
+    const introTargets = ['header', '#scene', '#statusBadge', '#ctaArea', '#aboutSection', '#footer'];
+    anime({
+      targets: introTargets,
+      opacity: [0, 1],
+      translateY: [24, 0],
+      duration: 700,
+      delay: anime.stagger(120, { start: 200 }),
+      easing: 'easeOutQuart'
+    });
+
+    /* ── Pulse dot ── */
+    anime({
+      targets: '#pulseDot',
+      scale: [1, 1.6, 1],
+      opacity: [1, 0.4, 1],
+      duration: 1400,
+      loop: true,
+      easing: 'easeInOutSine'
+    });
+
+    /* ── SVG animated paths colour cycle ──
+       Black outline → Yellow → Teal → Salmon → loop
+    */
+    const COLORS = {
+      base:   '#111111',
+      yellow: '#f5d600',
+      teal:   '#00d4c8',
+      salmon: '#ff8070',
+    };
+
+    const animatedPaths = document.querySelectorAll('.animated-path');
+
+    function buildColorTimeline() {
+      const tl = anime.timeline({
+        targets: animatedPaths,
+        loop: true,
+        easing: 'easeInOutSine'
+      });
+
+      tl.add({ stroke: COLORS.yellow, duration: 1200, delay: anime.stagger(60) })
+        .add({ stroke: COLORS.teal,   duration: 1200, delay: anime.stagger(60) })
+        .add({ stroke: COLORS.salmon, duration: 1200, delay: anime.stagger(60) })
+        .add({ stroke: COLORS.base,   duration:  900, delay: anime.stagger(40) });
+
+      return tl;
+    }
+
+    // Start after intro
+    setTimeout(buildColorTimeline, 800);
+
+    /* ── Monitor LED blink ── */
+    anime({
+      targets: '#led',
+      fill: ['#333', '#00d4c8', '#333'],
+      duration: 2000,
+      loop: true,
+      easing: 'easeInOutQuad',
+      delay: 1000
+    });
+
+    /* ── Keyboard / mouse subtle float ── */
+    anime({
+      targets: ['#keyboard', '#mouse'],
+      translateY: [0, -3, 0],
+      duration: 3200,
+      loop: true,
+      easing: 'easeInOutSine',
+      delay: anime.stagger(400)
+    });
+
+    /* ── Scene gentle levitation ── */
+    anime({
+      targets: '#scene',
+      translateY: [0, -8, 0],
+      duration: 4000,
+      loop: true,
+      easing: 'easeInOutSine',
+      delay: 900
+    });
+  </script>
+</body>
+</html>
