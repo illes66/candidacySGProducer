@@ -226,46 +226,6 @@
       fill: #ff8070;
     }
 
-    /* ── Skill dialog overlay ── */
-    #skill-dialog {
-      pointer-events: none;
-      position: fixed;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 8000;
-      opacity: 0;
-    }
-
-    #skill-dialog .skill-card {
-      background: rgba(13,13,20,0.92);
-      border: 1px solid rgba(255,128,112,0.5);
-      border-radius: 14px;
-      padding: 1.8rem 2.6rem;
-      max-width: 460px;
-      text-align: center;
-      box-shadow: 0 0 40px rgba(255,128,112,0.25);
-      transform: scale(0.88);
-    }
-
-    #skill-dialog .skill-icon {
-      font-size: 2rem;
-      margin-bottom: .5rem;
-    }
-
-    #skill-dialog .skill-title {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #ff8070;
-      margin-bottom: .4rem;
-    }
-
-    #skill-dialog .skill-body {
-      font-size: .9rem;
-      color: #c0c0d8;
-      line-height: 1.6;
-    }
 
     /* ── Responsive ── */
     @media (max-width: 480px) {
@@ -301,8 +261,6 @@
 
             <!-- Monitor base / stand -->
             <g id="Layer_1" transform="translate(-4.1505951,-131.95107)">
-              <path d="m 299.016,373.815 h 566.388 c 7.784,0 14.094,6.31 14.094,14.094 v 18.942 c 0,7.784 -6.31,14.094 -14.094,14.094 h -566.388 c -7.784,0 -14.094,-6.31 -14.094,-14.094 v -18.942 c 0,-7.784 6.31,-14.094 14.094,-14.094 z"
-                   stroke="#00d4c8" stroke-width="2" fill="#16161f" id="path839"/>
               <path d="m 311.77,420.945 h 550.744 c 9.38,0 16.984,7.604 16.984,16.984 v 62.232 c 0,9.38 -7.604,16.984 -16.984,16.984 h -550.744 c -9.38,0 -16.984,-7.604 -16.984,-16.984 v -62.232 c 0,-9.38 7.604,-16.984 16.984,-16.984 z"
                    stroke="#2a2a3a" stroke-width="2" fill="#1a1a2a" id="path841"/>
               <!-- Left drawer -->
@@ -323,15 +281,14 @@
                    stroke="#2a2a3a" stroke-width="3" fill="#26e198" opacity="0.7" id="path860-3"/>
               <path d="m -420.01819,-37.765625 h 433.032693 c 15.269259,0 27.646279,25.459645 27.646279,56.868646 v 111.927239 c 0,31.40901 -12.37702,56.86864 -27.646279,56.86864 h -433.032693 c -15.26751,0 -27.64452,-25.45963 -27.64452,-56.86864 v -111.927239 c 0,-31.409001 12.37701,-56.868646 27.64452,-56.868646 z"
                    stroke="#00d4c8" stroke-width="4" fill="#0d1a2a" id="path854-0"/>
-              <line x1="-400" y1="0" x2="0" y2="0" stroke="#00d4c8" stroke-width="2" opacity="0.3"/>
-              <rect x="-380" y="-20" width="180" height="8" rx="4" fill="#f5d600" opacity="0.6"/>
-              <rect x="-380" y="10" width="340" height="5" rx="2" fill="#00d4c8" opacity="0.4"/>
-              <rect x="-380" y="25" width="280" height="5" rx="2" fill="#f0f0f0" opacity="0.25"/>
-              <rect x="-380" y="40" width="310" height="5" rx="2" fill="#f0f0f0" opacity="0.2"/>
-              <rect x="-380" y="55" width="200" height="5" rx="2" fill="#26e198" opacity="0.4"/>
-              <circle cx="-240" cy="300" r="8" fill="#f5d600" opacity="0.8"/>
-              <circle cx="-200" cy="300" r="8" fill="#00d4c8" opacity="0.8"/>
-              <circle cx="-160" cy="300" r="8" fill="#26e198" opacity="0.8"/>
+              <!-- skill text display area (filled via JS) -->
+              <foreignObject id="skill-fo" x="-405" y="-120" width="440" height="240" opacity="0">
+                <div xmlns="http://www.w3.org/1999/xhtml" id="skill-fo-inner" style="color:#f0f0f0;font-family:'Segoe UI',sans-serif;padding:12px 16px;line-height:1.5;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;">
+                  <div id="svgSkillIcon" style="font-size:1.8rem;margin-bottom:6px;"></div>
+                  <div id="svgSkillTitle" style="font-size:.85rem;font-weight:700;color:#ff8070;margin-bottom:6px;"></div>
+                  <div id="svgSkillBody" style="font-size:.72rem;color:#c0c0d8;"></div>
+                </div>
+              </foreignObject>
             </g>
 
           </g>
@@ -339,14 +296,6 @@
       </svg>
     </div>
 
-    <!-- Skill dialog overlay -->
-    <div id="skill-dialog" aria-live="polite">
-      <div class="skill-card">
-        <div class="skill-icon" id="skill-icon"></div>
-        <div class="skill-title" id="skill-title"></div>
-        <div class="skill-body" id="skill-body"></div>
-      </div>
-    </div>
 
     <!-- Custom cursor -->
     <div id="cursor-glow" aria-hidden="true"></div>
@@ -446,36 +395,25 @@
       { icon: '🕹️', title: 'Unity Pipeline Experience', body: 'Deep familiarity with Unity build pipelines, asset bundles, and CI/CD for mobile — from prototype to store submission.' }
     ];
 
-    let dialogAnim = null;
-    let dialogTimer = null;
     let skillIndex = 0;
+    let hideTimer = null;
 
     function showSkill() {
       const s = skills[skillIndex % skills.length];
       skillIndex++;
 
-      document.getElementById('skill-icon').textContent  = s.icon;
-      document.getElementById('skill-title').textContent = s.title;
-      document.getElementById('skill-body').textContent  = s.body;
+      document.getElementById('svgSkillIcon').textContent  = s.icon;
+      document.getElementById('svgSkillTitle').textContent = s.title;
+      document.getElementById('svgSkillBody').textContent  = s.body;
 
-      const dialog = document.getElementById('skill-dialog');
-      const card   = dialog.querySelector('.skill-card');
+      const fo = document.getElementById('skill-fo');
+      clearTimeout(hideTimer);
 
-      if (dialogAnim) dialogAnim.pause();
-      clearTimeout(dialogTimer);
+      anime({ targets: fo, opacity: [0, 1], duration: 350, easing: 'easeOutQuad' });
 
-      dialogAnim = anime.timeline({ easing: 'easeOutExpo' })
-        .add({ targets: dialog, opacity: [0, 1], duration: 300 })
-        .add({ targets: card,   scale: [0.88, 1], duration: 400 }, '-=250');
-
-      dialogTimer = setTimeout(() => {
-        anime({
-          targets: dialog,
-          opacity: [1, 0],
-          duration: 500,
-          easing: 'easeInQuart'
-        });
-      }, 3200);
+      hideTimer = setTimeout(() => {
+        anime({ targets: fo, opacity: [1, 0], duration: 500, easing: 'easeInQuart' });
+      }, 3500);
     }
 
     /* ── Drawer hover animation (anime.js color tween) ── */
