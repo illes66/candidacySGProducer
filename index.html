@@ -353,8 +353,11 @@
     }
 
     if (sceneIllustration) {
-      sceneIllustration.addEventListener('load', setupInteractiveDrawers, { once: true });
-      initializeDrawersWhenReady();
+      if (sceneIllustration.contentDocument) {
+        initializeDrawersWhenReady();
+      } else {
+        sceneIllustration.addEventListener('load', setupInteractiveDrawers, { once: true });
+      }
     }
   </script>
 </body>
