@@ -467,10 +467,18 @@
           easing: 'easeInOutSine'
         });
       } else {
-        drawerFlash.style.opacity = '1';
-        setTimeout(() => {
-          drawerFlash.style.opacity = '0';
-        }, 250);
+        drawerFlash.animate(
+          [
+            { opacity: 0, transform: 'translate(-50%, -50%) scale(0.82)' },
+            { opacity: 1, transform: 'translate(-50%, -50%) scale(1)' },
+            { opacity: 0, transform: 'translate(-50%, -50%) scale(0.92)' }
+          ],
+          {
+            duration: 500,
+            easing: 'ease-in-out',
+            fill: 'forwards'
+          }
+        );
       }
     }
 
