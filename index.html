@@ -86,6 +86,19 @@
       filter: drop-shadow(0 16px 40px rgba(0, 212, 200, 0.18));
     }
 
+    .drawer-flash {
+      position: absolute;
+      width: 34%;
+      max-width: 200px;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      z-index: 3;
+    }
+
     .interactive-drawer {
       cursor: pointer;
       fill: #0d0d14;
@@ -267,6 +280,13 @@
           </g>
         </g>
       </svg>
+      <img
+        id="drawerFlash"
+        class="drawer-flash"
+        src="https://github.com/user-attachments/assets/388b2a5d-cd64-466d-8b01-20a339702d74"
+        alt=""
+        aria-hidden="true"
+      />
     </div>
 
     <!-- Waiting-room status -->
@@ -427,6 +447,33 @@
 
     svgEl.appendChild(overlayGroup);
 
+    const drawerFlash = document.getElementById('drawerFlash');
+
+    function playDrawerFlash(drawer) {
+      if (!drawerFlash) return;
+
+      const sceneRect = document.getElementById('scene').getBoundingClientRect();
+      const drawerRect = drawer.getBoundingClientRect();
+      drawerFlash.style.left = `${drawerRect.left + (drawerRect.width / 2) - sceneRect.left}px`;
+      drawerFlash.style.top = `${drawerRect.top + (drawerRect.height / 2) - sceneRect.top}px`;
+
+      if (hasAnime) {
+        anime.remove(drawerFlash);
+        anime({
+          targets: drawerFlash,
+          opacity: [0, 1, 0],
+          scale: [0.82, 1, 0.92],
+          duration: 500,
+          easing: 'easeInOutSine'
+        });
+      } else {
+        drawerFlash.style.opacity = '1';
+        setTimeout(() => {
+          drawerFlash.style.opacity = '0';
+        }, 250);
+      }
+    }
+
     function showOverlay(isCongrats) {
       const overlay = document.getElementById('svgOverlay');
       const titleEl = document.getElementById('overlayTitle');
@@ -497,6 +544,7 @@
       let resetTimeout = null;
 
       drawer.addEventListener('click', () => {
+        playDrawerFlash(drawer);
         drawer.classList.add('is-active');
         if (resetTimeout) clearTimeout(resetTimeout);
         resetTimeout = setTimeout(() => {
