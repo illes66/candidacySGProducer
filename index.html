@@ -220,8 +220,13 @@
         class="scene-illustration"
         data="producerSet.svg"
         type="image/svg+xml"
-        aria-label="Illustration of a producer desk setup"
-      ></object>
+      >
+        <img
+          class="scene-illustration"
+          src="producerSet.svg"
+          alt="Illustration of a producer desk setup"
+        />
+      </object>
     </div>
 
     <!-- Waiting-room status -->
@@ -313,16 +318,16 @@
         if (!drawer || drawer.dataset.drawerBound === 'true') return;
 
         drawer.dataset.drawerBound = 'true';
+        drawer.dataset.originalFill = drawer.getAttribute('fill') || '#0d0d14';
         drawer.style.cursor = 'pointer';
         drawer.style.transformBox = 'fill-box';
         drawer.style.transformOrigin = 'center';
 
         drawer.addEventListener('click', () => {
-          const currentFill = drawer.style.fill || drawer.getAttribute('fill') || '#0d0d14';
           anime.remove(drawer);
           anime({
             targets: drawer,
-            fill: [currentFill, salmonFill],
+            fill: [drawer.dataset.originalFill, salmonFill],
             scale: [1, 1.03, 1],
             duration: 360,
             easing: 'easeOutQuad'
