@@ -430,7 +430,7 @@
       drawerPaths.forEach((path) => {
         path.style.cursor = 'pointer';
         path.style.transition = 'filter .2s ease';
-        path.style.stroke = '#00d4c8';
+        anime.set(path, { stroke: '#00d4c8' });
         path.setAttribute('stroke-width', '3');
         path.addEventListener('mouseenter', () => path.style.filter = 'drop-shadow(0 0 6px rgba(0, 212, 200, .5))');
         path.addEventListener('mouseleave', () => path.style.filter = '');
@@ -459,7 +459,7 @@
         const svgDoc = new DOMParser().parseFromString(svgMarkup, 'image/svg+xml');
         const svg = svgDoc.documentElement;
 
-        if (!svg || svg.tagName.toLowerCase() === 'parsererror') throw new Error('Invalid SVG');
+        if (!svg || svgDoc.querySelector('parsererror')) throw new Error('Invalid SVG');
         sceneIllustration.replaceChildren(svg);
         svg.removeAttribute('width');
         svg.removeAttribute('height');
