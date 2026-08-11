@@ -345,21 +345,26 @@
 
       const originalFill = drawer.getAttribute('fill') || '#0d0d14';
       drawer.dataset.originalFill = originalFill;
+      drawer.style.fill = originalFill;
       drawer.style.transformBox = 'fill-box';
       drawer.style.transformOrigin = 'center';
 
       drawer.addEventListener('click', () => {
         const isActive = drawer.dataset.isActive === 'true';
         const nextFill = isActive ? drawer.dataset.originalFill : salmonFill;
+        drawer.setAttribute('fill', nextFill);
+        drawer.style.fill = nextFill;
         anime.remove(drawer);
         anime({
           targets: drawer,
-          fill: nextFill,
           scale: [1, 1.06, 1],
           translateY: [0, -3, 0],
           duration: 420,
           easing: 'easeOutBack',
-          complete: () => drawer.setAttribute('fill', nextFill)
+          complete: () => {
+            drawer.setAttribute('fill', nextFill);
+            drawer.style.fill = nextFill;
+          }
         });
         drawer.dataset.isActive = String(!isActive);
       });
