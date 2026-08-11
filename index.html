@@ -327,14 +327,16 @@
 
         drawer.addEventListener('click', () => {
           const currentFill = drawer.style.fill || drawer.dataset.originalFill;
+          const nextFill = drawer.dataset.isActive === 'true' ? drawer.dataset.originalFill : salmonFill;
           anime.remove(drawer);
           anime({
             targets: drawer,
-            fill: [currentFill, drawer.dataset.originalFill, salmonFill],
+            fill: [currentFill, nextFill],
             scale: [1, 1.03, 1],
-            duration: 420,
+            duration: 360,
             easing: 'easeOutQuad'
           });
+          drawer.dataset.isActive = String(nextFill === salmonFill);
         });
       });
     }
