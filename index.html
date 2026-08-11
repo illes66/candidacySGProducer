@@ -82,6 +82,7 @@
       display: block;
       width: 100%;
       height: auto;
+      border: 0;
       filter: drop-shadow(0 16px 40px rgba(0, 212, 200, 0.18));
     }
 
@@ -214,11 +215,13 @@
 
     <!-- SVG Desktop Scene -->
     <div class="scene" id="scene">
-      <img
+      <object
+        id="sceneIllustration"
         class="scene-illustration"
-        src="producerSet.svg"
-        alt="Illustration of a producer desk setup"
-      />
+        data="producerSet.svg"
+        type="image/svg+xml"
+        aria-label="Illustration of a producer desk setup"
+      ></object>
     </div>
 
     <!-- Waiting-room status -->
@@ -295,6 +298,43 @@
       easing: 'easeInOutSine',
       delay: 900
     });
+
+    /* ── Interactive desk drawers ── */
+    const sceneIllustration = document.getElementById('sceneIllustration');
+    const drawerIds = ['path843', 'path845'];
+    const salmonFill = '#ff8070';
+
+    function setupInteractiveDrawers() {
+      const svgDocument = sceneIllustration.contentDocument;
+      if (!svgDocument) return;
+
+      drawerIds.forEach((drawerId) => {
+        const drawer = svgDocument.getElementById(drawerId);
+        if (!drawer) return;
+
+        drawer.style.cursor = 'pointer';
+        drawer.style.transformBox = 'fill-box';
+        drawer.style.transformOrigin = 'center';
+
+        drawer.addEventListener('click', () => {
+          anime.remove(drawer);
+          anime({
+            targets: drawer,
+            fill: [drawer.getAttribute('fill') || '#0d0d14', salmonFill],
+            scale: [1, 1.03, 1],
+            duration: 360,
+            easing: 'easeOutQuad'
+          });
+        });
+      });
+    }
+
+    if (sceneIllustration) {
+      sceneIllustration.addEventListener('load', setupInteractiveDrawers);
+      if (sceneIllustration.contentDocument?.readyState === 'complete') {
+        setupInteractiveDrawers();
+      }
+    }
   </script>
 </body>
 </html>
