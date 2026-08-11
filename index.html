@@ -434,8 +434,8 @@
     /* Congratulations final text */
     const congratsText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
     congratsText.setAttribute('id', 'congratsText');
-    congratsText.setAttribute('x', '40');
-    congratsText.setAttribute('y', '40');
+    congratsText.setAttribute('x', '102');
+    congratsText.setAttribute('y', '44');
     congratsText.setAttribute('text-anchor', 'middle');
     congratsText.setAttribute('dominant-baseline', 'middle');
     congratsText.setAttribute('font-family', 'Segoe UI, system-ui, sans-serif');
@@ -497,11 +497,11 @@ drawerFlash.style.top = `${screenRect.top + (screenRect.height / 2) - sceneRect.
         /* second line via tspan */
         congrats.textContent = '';
         const line1 = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
-        line1.setAttribute('x', '50'); line1.setAttribute('dy', '0'); line1.textContent = 'MATCH FOUND!!';
+        line1.setAttribute('x', '102'); line1.setAttribute('dy', '0'); line1.textContent = 'MATCH FOUND!!';
         const line2 = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
-        line2.setAttribute('x', '50'); line2.setAttribute('dy', '14'); line2.textContent = 'CONGRATULATIONS: YOU FOUND YOUR';
+        line2.setAttribute('x', '102'); line2.setAttribute('dy', '14'); line2.textContent = 'CONGRATULATIONS: YOU FOUND YOUR';
         const line3 = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
-        line3.setAttribute('x', '50'); line3.setAttribute('dy', '14'); line3.textContent = 'NEW PRODUCER';
+        line3.setAttribute('x', '102'); line3.setAttribute('dy', '14'); line3.textContent = 'NEW PRODUCER';
         congrats.appendChild(line1); congrats.appendChild(line2); congrats.appendChild(line3);
       } else {
         titleEl.style.display = '';
