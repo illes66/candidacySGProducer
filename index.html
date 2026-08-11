@@ -84,36 +84,6 @@
       height: auto;
       filter: drop-shadow(0 16px 40px rgba(0, 212, 200, 0.18));
     }
-    .scene-illustration svg {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
-
-    .scene-popup {
-      position: absolute;
-      left: 50%;
-      top: 52%;
-      transform: translate(-50%, -50%);
-      width: min(88%, 430px);
-      text-align: center;
-      pointer-events: none;
-      opacity: 0;
-      z-index: 5;
-    }
-
-    .scene-popup h3 {
-      color: var(--teal);
-      font-size: clamp(1.1rem, 2.4vw, 1.6rem);
-      line-height: 1.2;
-      margin-bottom: .45rem;
-    }
-
-    .scene-popup p {
-      color: var(--yellow);
-      font-size: clamp(.78rem, 1.8vw, .95rem);
-      line-height: 1.45;
-    }
 
     /* ── Status badge ── */
     .status-badge {
@@ -244,16 +214,11 @@
 
     <!-- SVG Desktop Scene -->
     <div class="scene" id="scene">
-      <div
+      <img
         class="scene-illustration"
-        id="sceneIllustration"
-        role="img"
-        aria-label="Illustration of a producer desk setup"
-      ></div>
-      <div class="scene-popup" id="scenePopup" aria-live="polite">
-        <h3 id="scenePopupTitle"></h3>
-        <p id="scenePopupDescription"></p>
-      </div>
+        src="producerSet.svg"
+        alt="Illustration of a producer desk setup"
+      />
     </div>
 
     <!-- Waiting-room status -->
@@ -330,146 +295,6 @@
       easing: 'easeInOutSine',
       delay: 900
     });
-
-    const requirementPopups = [
-      {
-        title: 'GameDev / Producer / Unity',
-        description: 'I started my GameDev career as a programmer and have been working with Unity for over 10 years, later moving into game production and combining technical knowledge with hands-on development and production experience.'
-      },
-      {
-        title: 'Cross-functional teams',
-        description: 'I have led cross-functional teams across Design, Programming, Art, QA, UI, SFX and VFX, including a 23-person art team at 2K.'
-      },
-      {
-        title: 'Prototyping & fast iteration',
-        description: 'I build small game experiences and prototypes in Unity, focusing on testing ideas quickly and iterating through hands-on development.'
-      },
-      {
-        title: 'Mechanics / player experience / game feel',
-        description: 'My production experience has always involved balancing technical constraints, product goals and player experience across different games and platforms.'
-      },
-      {
-        title: 'Fast-paced R&D / testing & decisions',
-        description: 'I am comfortable working with changing priorities, identifying risks quickly and using feedback to decide what to improve, change or stop.'
-      },
-      {
-        title: 'Solo development / building small teams',
-        description: 'I currently develop my own small experiences and have a network of industry contacts to build small development teams when needed.'
-      },
-      {
-        title: 'AI-assisted development',
-        description: 'I actively explore modern AI tools to speed up ideation, prototyping and development while keeping the creative and production decisions human-led.'
-      },
-      {
-        title: 'Market research / adapting ideas',
-        description: 'I enjoy researching games, competitors and successful gameplay patterns, then using those references to explore new ideas and directions.'
-      }
-    ];
-
-    const sceneIllustration = document.getElementById('sceneIllustration');
-    const scenePopup = document.getElementById('scenePopup');
-    const scenePopupTitle = document.getElementById('scenePopupTitle');
-    const scenePopupDescription = document.getElementById('scenePopupDescription');
-    let popupIndex = 0;
-    let popupHideTimer;
-    let popupRunId = 0;
-
-    const showPopup = ({ title, description }) => {
-      popupRunId += 1;
-      const runId = popupRunId;
-      clearTimeout(popupHideTimer);
-      scenePopupTitle.textContent = title;
-      scenePopupDescription.textContent = description;
-      anime.remove([scenePopup, scenePopupTitle, scenePopupDescription]);
-      anime.set(scenePopup, { opacity: 0, scale: 0.92, translateY: 0 });
-      anime.set(scenePopupTitle, { opacity: 0, translateY: 10 });
-      anime.set(scenePopupDescription, { opacity: 0, translateY: 12 });
-
-      anime({
-        targets: scenePopup,
-        opacity: [0, 1],
-        scale: [0.92, 1],
-        duration: 260,
-        easing: 'easeOutQuad'
-      });
-
-      anime({
-        targets: scenePopupTitle,
-        opacity: [0, 1],
-        translateY: [10, 0],
-        duration: 320,
-        easing: 'easeOutQuad'
-      });
-
-      anime({
-        targets: scenePopupDescription,
-        opacity: [0, 1],
-        translateY: [12, 0],
-        duration: 320,
-        delay: 140,
-        easing: 'easeOutQuad'
-      });
-
-      popupHideTimer = setTimeout(() => {
-        if (runId !== popupRunId) return;
-        anime.remove([scenePopup, scenePopupTitle, scenePopupDescription]);
-        anime({
-          targets: scenePopup,
-          opacity: [1, 0],
-          translateY: [0, -6],
-          duration: 360,
-          easing: 'easeInQuad'
-        });
-      }, 3200);
-    };
-
-    const setupInteractiveDrawers = (svg) => {
-      const drawerPathIds = ['path843', 'path845'];
-      const drawerPaths = drawerPathIds.map((id) => svg.querySelector(`#${id}`)).filter(Boolean);
-
-      drawerPaths.forEach((path) => {
-        path.style.cursor = 'pointer';
-        path.style.transition = 'filter .2s ease';
-        anime.set(path, { stroke: '#00d4c8' });
-        path.setAttribute('stroke-width', '3');
-        path.addEventListener('mouseenter', () => path.style.filter = 'drop-shadow(0 0 6px rgba(0, 212, 200, .5))');
-        path.addEventListener('mouseleave', () => path.style.filter = '');
-        path.addEventListener('click', () => {
-          anime.remove(path);
-          anime.set(path, { stroke: '#00d4c8' });
-          anime({
-            targets: path,
-            stroke: ['#00d4c8', '#ff8070', '#00d4c8'],
-            duration: 750,
-            easing: 'easeInOutSine'
-          });
-
-          showPopup(requirementPopups[popupIndex % requirementPopups.length]);
-          popupIndex += 1;
-        });
-      });
-    };
-
-    fetch('producerSet.svg')
-      .then((response) => {
-        if (!response.ok) throw new Error(response.statusText);
-        return response.text();
-      })
-      .then((svgMarkup) => {
-        const svgDoc = new DOMParser().parseFromString(svgMarkup, 'image/svg+xml');
-        const svg = svgDoc.documentElement;
-
-        if (!svg || svgDoc.querySelector('parsererror')) throw new Error('Invalid SVG');
-        svg.removeAttribute('width');
-        svg.removeAttribute('height');
-        svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
-        sceneIllustration.replaceChildren(svg);
-        setupInteractiveDrawers(svg);
-      })
-      .catch((error) => {
-        console.error('Failed to load interactive SVG:', error);
-        sceneIllustration.innerHTML = '<img src="producerSet.svg" alt="Illustration of a producer desk setup" />';
-      });
   </script>
 </body>
 </html>
