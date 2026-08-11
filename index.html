@@ -495,17 +495,17 @@
         // Fallback (no anime.js): frame1 then frame2 sequentially
         drawerFlash.animate(
           [
-            { opacity: 0, transform: 'translate(-50%,-50%) scale(0.85)' },
+            { opacity: 0, transform: 'translate(-50%,-50%) scale(1)' },
             { opacity: 1, transform: 'translate(-50%,-50%) scale(1)' },
-            { opacity: 0, transform: 'translate(-50%,-50%) scale(0.9)' }
+            { opacity: 0, transform: 'translate(-50%,-50%) scale(1)' }
           ],
           { duration: 300, easing: 'ease-in-out', fill: 'forwards' }
         ).onfinish = () => {
           drawerFlash2.animate(
             [
-              { opacity: 0, transform: 'translate(-50%,-50%) scale(0.85)' },
+              { opacity: 0, transform: 'translate(-50%,-50%) scale(1)' },
               { opacity: 1, transform: 'translate(-50%,-50%) scale(1)' },
-              { opacity: 0, transform: 'translate(-50%,-50%) scale(0.9)' }
+              { opacity: 0, transform: 'translate(-50%,-50%) scale(1)' }
             ],
             { duration: 300, easing: 'ease-in-out', fill: 'forwards' }
           );
