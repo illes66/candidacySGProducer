@@ -412,7 +412,7 @@
 
       popupHideTimer = setTimeout(() => {
         if (runId !== popupRunId) return;
-        anime.remove(scenePopup);
+        anime.remove([scenePopup, scenePopupTitle, scenePopupDescription]);
         anime({
           targets: scenePopup,
           opacity: [1, 0],
@@ -436,7 +436,7 @@
         path.addEventListener('mouseleave', () => path.style.filter = '');
         path.addEventListener('click', () => {
           anime.remove(path);
-          path.style.stroke = '#00d4c8';
+          anime.set(path, { stroke: '#00d4c8' });
           anime({
             targets: path,
             stroke: ['#00d4c8', '#ff8070', '#00d4c8'],
@@ -456,10 +456,11 @@
         return response.text();
       })
       .then((svgMarkup) => {
-        sceneIllustration.innerHTML = svgMarkup;
-        const svg = sceneIllustration.querySelector('svg');
+        const svgDoc = new DOMParser().parseFromString(svgMarkup, 'image/svg+xml');
+        const svg = svgDoc.documentElement;
 
-        if (!svg) return;
+        if (!svg || svg.tagName.toLowerCase() === 'parsererror') throw new Error('Invalid SVG');
+        sceneIllustration.replaceChildren(svg);
         svg.removeAttribute('width');
         svg.removeAttribute('height');
         svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
