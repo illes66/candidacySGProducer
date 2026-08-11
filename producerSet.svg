@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:inkpad="http://taptrix.com/inkpad/svg_extensions"
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.0dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg8">
+  <defs id="defs2">
+    <linearGradient id="lg-teal" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" style="stop-color:#00d4c8;stop-opacity:1;"/>
+      <stop offset="1" style="stop-color:#26e198;stop-opacity:1;"/>
+    </linearGradient>
+  </defs>
+  <g inkscape:label="Capa 1" inkscape:groupmode="layer" id="layer1">
+    <g id="g880" transform="matrix(0.35277778,0,0,0.35277778,-98.74396,22.042117)">
+
+      <!-- Monitor base / stand -->
+      <g id="Layer 1" transform="translate(-4.1505951,-131.95107)">
+        <!-- Stand top bar -->
+        <path
+           d="m 299.016,373.815 h 566.388 c 7.784,0 14.094,6.31 14.094,14.094 v 18.942 c 0,7.784 -6.31,14.094 -14.094,14.094 h -566.388 c -7.784,0 -14.094,-6.31 -14.094,-14.094 v -18.942 c 0,-7.784 6.31,-14.094 14.094,-14.094 z"
+           stroke="#00d4c8"
+           stroke-width="2"
+           fill="#16161f"
+           opacity="1"
+           id="path839"/>
+        <!-- Desk surface -->
+        <path
+           d="m 311.77,420.945 h 550.744 c 9.38,0 16.984,7.604 16.984,16.984 v 62.232 c 0,9.38 -7.604,16.984 -16.984,16.984 h -550.744 c -9.38,0 -16.984,-7.604 -16.984,-16.984 v -62.232 c 0,-9.38 7.604,-16.984 16.984,-16.984 z"
+           stroke="#2a2a3a"
+           stroke-width="2"
+           fill="#1a1a2a"
+           opacity="1"
+           id="path841"/>
+        <!-- Left control pod -->
+        <path
+           d="m 353.116,443.59 h 178.402 c 14.059,0 25.455,11.396 25.455,25.455 v 0 c 0,14.058 -11.396,25.455 -25.455,25.455 h -178.402 c -14.059,0 -25.455,-11.397 -25.455,-25.455 v 0 c 0,-14.059 11.396,-25.455 25.455,-25.455 z"
+           stroke="#00d4c8"
+           stroke-width="3"
+           fill="#0d0d14"
+           opacity="1"
+           id="path843"/>
+        <!-- Right control pod -->
+        <path
+           d="m 645.376,443.59 h 173.47 c 14.058,0 25.455,11.396 25.455,25.455 v 0 c 0,14.058 -11.397,25.455 -25.455,25.455 h -173.47 c -14.059,0 -25.455,-11.397 -25.455,-25.455 v 0 c 0,-14.059 11.396,-25.455 25.455,-25.455 z"
+           stroke="#00d4c8"
+           stroke-width="3"
+           fill="#0d0d14"
+           opacity="1"
+           id="path845"/>
+      </g>
+
+      <!-- Chair / monitor body -->
+      <g id="Layer 2" transform="translate(773.57142,25.714286)">
+        <!-- Monitor screen body -->
+        <path
+           d="m 1030.5937,-337.93357 c 2.131,19.483 1.043,12.736 1.043,12.736 4.08,105.648 -658.06299,88.566 -603.11899,6.522 l 9.303,-18.43 c -12.541,-111.1175 76.51,-23.967 91.123,-23.912 l 404.44,4.032 c 49.904,-44.3584 86.14099,-82.1641 97.20999,19.052 z"
+           stroke="#00d4c8"
+           stroke-width="3"
+           fill="#16161f"
+           opacity="1"
+           id="path858"/>
+        <!-- Left leg -->
+        <path
+           d="m 23.882006,375.88829 c 8.368,0 -15.1530004,21.122 -15.1530004,29.49 l -3.024,287.853 c 41.2740004,28.061 -19.5749996,27.025 -25.9659996,18.141 l -35.25,-333.064 c 0,-8.369 79.393,-2.42 79.393,-2.42 z"
+           stroke="#2a2a3a"
+           stroke-width="3"
+           fill="#26e198"
+           opacity="0.7"
+           id="path860"/>
+        <!-- Right leg -->
+        <path
+           d="m -387.63509,376.07617 c -9.61361,0 17.40858,21.122 17.40858,29.49 l 3.47414,287.853 c -47.4178,28.061 22.48881,27.025 29.83114,18.141 l 40.4971,-333.064 c 0,-8.369 -91.21096,-2.42 -91.21096,-2.42 z"
+           stroke="#2a2a3a"
+           stroke-width="3"
+           fill="#26e198"
+           opacity="0.7"
+           id="path860-3"/>
+        <!-- Monitor screen -->
+        <path
+           d="m -420.01819,-37.765625 h 433.032693 c 15.269259,0 27.646279,25.459645 27.646279,56.868646 v 111.927239 c 0,31.40901 -12.37702,56.86864 -27.646279,56.86864 h -433.032693 c -15.26751,0 -27.64452,-25.45963 -27.64452,-56.86864 v -111.927239 c 0,-31.409001 12.37701,-56.868646 27.64452,-56.868646 z"
+           stroke="#00d4c8"
+           stroke-width="4"
+           fill="#0d1a2a"
+           opacity="1"
+           id="path854-0"/>
+      </g>
+
+    </g>
+  </g>
+</svg>
