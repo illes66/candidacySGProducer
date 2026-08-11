@@ -372,8 +372,11 @@
     const scenePopupDescription = document.getElementById('scenePopupDescription');
     let popupIndex = 0;
     let popupHideTimer;
+    let popupRunId = 0;
 
     const showPopup = ({ title, description }) => {
+      popupRunId += 1;
+      const runId = popupRunId;
       clearTimeout(popupHideTimer);
       scenePopupTitle.textContent = title;
       scenePopupDescription.textContent = description;
@@ -408,6 +411,8 @@
       });
 
       popupHideTimer = setTimeout(() => {
+        if (runId !== popupRunId) return;
+        anime.remove(scenePopup);
         anime({
           targets: scenePopup,
           opacity: [1, 0],
@@ -431,6 +436,7 @@
         path.addEventListener('mouseleave', () => path.style.filter = '');
         path.addEventListener('click', () => {
           anime.remove(path);
+          path.style.stroke = '#00d4c8';
           anime({
             targets: path,
             stroke: ['#00d4c8', '#ff8070', '#00d4c8'],
