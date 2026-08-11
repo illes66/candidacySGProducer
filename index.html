@@ -330,9 +330,9 @@
           anime.remove(drawer);
           anime({
             targets: drawer,
-            fill: [currentFill, salmonFill],
+            fill: [currentFill, drawer.dataset.originalFill, salmonFill],
             scale: [1, 1.03, 1],
-            duration: 360,
+            duration: 420,
             easing: 'easeOutQuad'
           });
         });
@@ -351,7 +351,7 @@
     }
 
     if (sceneIllustration) {
-      sceneIllustration.addEventListener('load', setupInteractiveDrawers);
+      sceneIllustration.addEventListener('load', setupInteractiveDrawers, { once: true });
       initializeDrawersWhenReady();
     }
   </script>
