@@ -311,6 +311,11 @@
     const drawerIds = ['path843', 'path845'];
     const salmonFill = '#ff8070';
 
+    function setDrawerFill(drawer, fill) {
+      drawer.style.fill = fill;
+      drawer.setAttribute('fill', fill);
+    }
+
     function setupInteractiveDrawers() {
       const svgDocument = sceneIllustration.contentDocument;
       if (!svgDocument) return;
@@ -321,6 +326,7 @@
 
         drawer.dataset.drawerBound = 'true';
         drawer.dataset.originalFill = drawer.getAttribute('fill') || '#0d0d14';
+        setDrawerFill(drawer, drawer.dataset.originalFill);
         drawer.style.cursor = 'pointer';
         drawer.style.transformBox = 'fill-box';
         drawer.style.transformOrigin = 'center';
@@ -332,9 +338,12 @@
           anime({
             targets: drawer,
             fill: [currentFill, nextFill],
-            scale: [1, 1.03, 1],
-            duration: 360,
-            easing: 'easeOutQuad'
+            scale: [1, 1.06, 1],
+            translateY: [0, -3, 0],
+            duration: 420,
+            easing: 'easeOutBack',
+            begin: () => setDrawerFill(drawer, currentFill),
+            complete: () => setDrawerFill(drawer, nextFill)
           });
           drawer.dataset.isActive = String(nextFill === salmonFill);
         });
