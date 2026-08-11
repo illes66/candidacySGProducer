@@ -458,51 +458,58 @@
 
     const drawerFlash  = document.getElementById('drawerFlash');
     const drawerFlash2 = document.getElementById('drawerFlash2');
-    // Tracks which frame shows next (alternates between frame1 and frame2)
-    let _flashFrameIndex = 0;
 
     function playDrawerFlash(drawer) {
-      if (!drawerFlash) return;
+      if (!drawerFlash || !drawerFlash2) return;
 
       const sceneRect  = document.getElementById('scene').getBoundingClientRect();
       const screenRect = document.getElementById('path854-0').getBoundingClientRect();
       const cx = `${screenRect.left + (screenRect.width  / 2) - sceneRect.left}px`;
       const cy = `${screenRect.top  + (screenRect.height / 2) - sceneRect.top}px`;
 
-      // Alternate between frame 1 and frame 2
-      _flashFrameIndex = (_flashFrameIndex + 1) % 2;
-      // ── To swap which image shows first, change the line above to start at 0 or 1
-      const activeFlash   = _flashFrameIndex === 0 ? drawerFlash  : drawerFlash2;
-      const inactiveFlash = _flashFrameIndex === 0 ? drawerFlash2 : drawerFlash;
+      // Position both frames centred on the monitor screen
+      drawerFlash.style.left  = cx;  drawerFlash.style.top  = cy;
+      drawerFlash2.style.left = cx;  drawerFlash2.style.top = cy;
 
-      // Keep inactive frame fully hidden
-      inactiveFlash.style.opacity = '0';
-
-      activeFlash.style.left = cx;
-      activeFlash.style.top  = cy;
-
+      // ── Animation: frame1 fades in first, then frame2 takes over, then both out.
+      // Total duration = 600 ms split in two halves (300 ms each).
+      // To adjust timing, change the duration values below.
       if (hasAnime) {
-        anime.remove(activeFlash);
+        anime.remove([drawerFlash, drawerFlash2]);
+        // Frame 1: in → visible → starts fading before frame 2 takes over
         anime({
-          targets: activeFlash,
+          targets: drawerFlash,
           opacity: [0, 1, 0],
-          scale: [1, 1, 1],
-          duration: 500,
+          duration: 400,           // ← duration of frame 1 in ms
+          easing: 'easeInOutSine'
+        });
+        // Frame 2: starts halfway through, fades in then out
+        anime({
+          targets: drawerFlash2,
+          opacity: [0, 1, 0],
+          duration: 400,           // ← duration of frame 2 in ms
+          delay: 200,              // ← delay before frame 2 appears (overlap point)
           easing: 'easeInOutSine'
         });
       } else {
-        activeFlash.animate(
+        // Fallback (no anime.js): frame1 then frame2 sequentially
+        drawerFlash.animate(
           [
-            { opacity: 0, transform: 'translate(-50%, -50%) scale(0.82)' },
-            { opacity: 1, transform: 'translate(-50%, -50%) scale(1)' },
-            { opacity: 0, transform: 'translate(-50%, -50%) scale(0.92)' }
+            { opacity: 0, transform: 'translate(-50%,-50%) scale(0.85)' },
+            { opacity: 1, transform: 'translate(-50%,-50%) scale(1)' },
+            { opacity: 0, transform: 'translate(-50%,-50%) scale(0.9)' }
           ],
-          {
-            duration: 500,
-            easing: 'ease-in-out',
-            fill: 'forwards'
-          }
-        );
+          { duration: 300, easing: 'ease-in-out', fill: 'forwards' }
+        ).onfinish = () => {
+          drawerFlash2.animate(
+            [
+              { opacity: 0, transform: 'translate(-50%,-50%) scale(0.85)' },
+              { opacity: 1, transform: 'translate(-50%,-50%) scale(1)' },
+              { opacity: 0, transform: 'translate(-50%,-50%) scale(0.9)' }
+            ],
+            { duration: 300, easing: 'ease-in-out', fill: 'forwards' }
+          );
+        };
       }
     }
 
