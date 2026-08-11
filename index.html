@@ -444,7 +444,10 @@
     };
 
     fetch('producerSet.svg')
-      .then((response) => response.text())
+      .then((response) => {
+        if (!response.ok) throw new Error(response.statusText);
+        return response.text();
+      })
       .then((svgMarkup) => {
         sceneIllustration.innerHTML = svgMarkup;
         const svg = sceneIllustration.querySelector('svg');
@@ -456,7 +459,7 @@
         setupInteractiveDrawers(svg);
       })
       .catch(() => {
-        sceneIllustration.innerHTML = '<img class="scene-illustration" src="producerSet.svg" alt="Illustration of a producer desk setup" />';
+        sceneIllustration.innerHTML = '<img src="producerSet.svg" alt="Illustration of a producer desk setup" />';
       });
   </script>
 </body>
