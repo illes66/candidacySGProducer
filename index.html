@@ -466,7 +466,8 @@
         svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
         setupInteractiveDrawers(svg);
       })
-      .catch(() => {
+      .catch((error) => {
+        console.error('Failed to load interactive SVG:', error);
         sceneIllustration.innerHTML = '<img src="producerSet.svg" alt="Illustration of a producer desk setup" />';
       });
   </script>
