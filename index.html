@@ -82,6 +82,7 @@
       display: block;
       width: 100%;
       height: auto;
+      border: 0;
       filter: drop-shadow(0 16px 40px rgba(0, 212, 200, 0.18));
     }
 
@@ -214,11 +215,20 @@
 
     <!-- SVG Desktop Scene -->
     <div class="scene" id="scene">
-      <img
+      <object
+        id="sceneIllustration"
         class="scene-illustration"
-        src="producerSet.svg"
-        alt="Illustration of a producer desk setup"
-      />
+        data="producerSet.svg"
+        type="image/svg+xml"
+        aria-label="Illustration of a producer desk setup"
+        title="Illustration of a producer desk setup"
+      >
+        <img
+          class="scene-illustration"
+          src="producerSet.svg"
+          alt="Illustration of a producer desk setup"
+        />
+      </object>
     </div>
 
     <!-- Waiting-room status -->
@@ -295,6 +305,57 @@
       easing: 'easeInOutSine',
       delay: 900
     });
+
+    /* ── Interactive desk drawers ── */
+    const sceneIllustration = document.getElementById('sceneIllustration');
+    const drawerIds = ['path843', 'path845'];
+    const salmonFill = '#ff8070';
+
+    function setupInteractiveDrawers() {
+      const svgDocument = sceneIllustration.contentDocument;
+      if (!svgDocument) return;
+
+      drawerIds.forEach((drawerId) => {
+        const drawer = svgDocument.getElementById(drawerId);
+        if (!drawer || drawer.dataset.drawerBound === 'true') return;
+
+        drawer.dataset.drawerBound = 'true';
+        drawer.dataset.originalFill = drawer.getAttribute('fill') || '#0d0d14';
+        drawer.style.cursor = 'pointer';
+        drawer.style.transformBox = 'fill-box';
+        drawer.style.transformOrigin = 'center';
+
+        drawer.addEventListener('click', () => {
+          const currentFill = drawer.style.fill || drawer.dataset.originalFill;
+          const nextFill = drawer.dataset.isActive === 'true' ? drawer.dataset.originalFill : salmonFill;
+          anime.remove(drawer);
+          anime({
+            targets: drawer,
+            fill: [currentFill, nextFill],
+            scale: [1, 1.03, 1],
+            duration: 360,
+            easing: 'easeOutQuad'
+          });
+          drawer.dataset.isActive = String(nextFill === salmonFill);
+        });
+      });
+    }
+
+    function initializeDrawersWhenReady() {
+      const svgDocument = sceneIllustration.contentDocument;
+      if (!svgDocument) return;
+
+      if (svgDocument.readyState === 'loading') {
+        svgDocument.addEventListener('DOMContentLoaded', setupInteractiveDrawers, { once: true });
+      } else {
+        setupInteractiveDrawers();
+      }
+    }
+
+    if (sceneIllustration) {
+      sceneIllustration.addEventListener('load', setupInteractiveDrawers, { once: true });
+      requestAnimationFrame(initializeDrawersWhenReady);
+    }
   </script>
 </body>
 </html>
