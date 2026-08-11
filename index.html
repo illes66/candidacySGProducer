@@ -86,6 +86,16 @@
       filter: drop-shadow(0 16px 40px rgba(0, 212, 200, 0.18));
     }
 
+    .interactive-drawer {
+      cursor: pointer;
+      fill: #0d0d14;
+      transition: fill .18s ease;
+    }
+
+    .interactive-drawer.is-active {
+      fill: var(--salmon);
+    }
+
     /* ── Status badge ── */
     .status-badge {
       display: inline-flex;
@@ -240,9 +250,9 @@
               <!-- Desk surface -->
               <path d="m 311.77,420.945 h 550.744 c 9.38,0 16.984,7.604 16.984,16.984 v 62.232 c 0,9.38 -7.604,16.984 -16.984,16.984 h -550.744 c -9.38,0 -16.984,-7.604 -16.984,-16.984 v -62.232 c 0,-9.38 7.604,-16.984 16.984,-16.984 z" stroke="#2a2a3a" stroke-width="2" fill="#1a1a2a" id="path841"/>
               <!-- Left control pod -->
-              <path d="m 353.116,443.59 h 178.402 c 14.059,0 25.455,11.396 25.455,25.455 v 0 c 0,14.058 -11.396,25.455 -25.455,25.455 h -178.402 c -14.059,0 -25.455,-11.397 -25.455,-25.455 v 0 c 0,-14.059 11.396,-25.455 25.455,-25.455 z" stroke="#00d4c8" stroke-width="3" fill="#0d0d14" id="path843" style="cursor:pointer"/>
+              <path d="m 353.116,443.59 h 178.402 c 14.059,0 25.455,11.396 25.455,25.455 v 0 c 0,14.058 -11.396,25.455 -25.455,25.455 h -178.402 c -14.059,0 -25.455,-11.397 -25.455,-25.455 v 0 c 0,-14.059 11.396,-25.455 25.455,-25.455 z" stroke="#00d4c8" stroke-width="3" fill="#0d0d14" id="path843" class="interactive-drawer"/>
               <!-- Right control pod -->
-              <path d="m 645.376,443.59 h 173.47 c 14.058,0 25.455,11.396 25.455,25.455 v 0 c 0,14.058 -11.397,25.455 -25.455,25.455 h -173.47 c -14.059,0 -25.455,-11.397 -25.455,-25.455 v 0 c 0,-14.059 11.396,-25.455 25.455,-25.455 z" stroke="#00d4c8" stroke-width="3" fill="#0d0d14" id="path845" style="cursor:pointer"/>
+              <path d="m 645.376,443.59 h 173.47 c 14.058,0 25.455,11.396 25.455,25.455 v 0 c 0,14.058 -11.397,25.455 -25.455,25.455 h -173.47 c -14.059,0 -25.455,-11.397 -25.455,-25.455 v 0 c 0,-14.059 11.396,-25.455 25.455,-25.455 z" stroke="#00d4c8" stroke-width="3" fill="#0d0d14" id="path845" class="interactive-drawer"/>
             </g>
             <!-- Chair / monitor body -->
             <g id="Layer2" transform="translate(773.57142,25.714286)">
@@ -337,36 +347,24 @@
 
     /* ── Interactive desk drawers ── */
     const drawerIds = ['path843', 'path845'];
-    const salmonFill = '#ff8070';
 
     drawerIds.forEach((drawerId) => {
       const drawer = document.getElementById(drawerId);
       if (!drawer) return;
 
-      const originalFill = drawer.getAttribute('fill') || '#0d0d14';
-      drawer.dataset.originalFill = originalFill;
-      drawer.style.fill = originalFill;
       drawer.style.transformBox = 'fill-box';
       drawer.style.transformOrigin = 'center';
 
       drawer.addEventListener('click', () => {
-        const isActive = drawer.dataset.isActive === 'true';
-        const nextFill = isActive ? drawer.dataset.originalFill : salmonFill;
-        drawer.setAttribute('fill', nextFill);
-        drawer.style.fill = nextFill;
+        drawer.classList.toggle('is-active');
         anime.remove(drawer);
         anime({
           targets: drawer,
           scale: [1, 1.06, 1],
           translateY: [0, -3, 0],
           duration: 420,
-          easing: 'easeOutBack',
-          complete: () => {
-            drawer.setAttribute('fill', nextFill);
-            drawer.style.fill = nextFill;
-          }
+          easing: 'easeOutBack'
         });
-        drawer.dataset.isActive = String(!isActive);
       });
     });
   </script>
