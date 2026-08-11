@@ -460,10 +460,10 @@
         const svg = svgDoc.documentElement;
 
         if (!svg || svgDoc.querySelector('parsererror')) throw new Error('Invalid SVG');
-        sceneIllustration.replaceChildren(svg);
         svg.removeAttribute('width');
         svg.removeAttribute('height');
         svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+        sceneIllustration.replaceChildren(svg);
         setupInteractiveDrawers(svg);
       })
       .catch((error) => {
