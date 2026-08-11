@@ -375,84 +375,53 @@
     overlayGroup.style.pointerEvents = 'none';
 
     const overlayRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    overlayRect.setAttribute('x', '0');
+    overlayRect.setAttribute('y', '0');
+    overlayRect.setAttribute('width', '210');
+    overlayRect.setAttribute('height', '297');
     overlayRect.setAttribute('fill', 'white');
     overlayGroup.appendChild(overlayRect);
 
     const overlayTitle = document.createElementNS('http://www.w3.org/2000/svg', 'text');
     overlayTitle.setAttribute('id', 'overlayTitle');
+    overlayTitle.setAttribute('x', '105');
+    overlayTitle.setAttribute('y', '100');
     overlayTitle.setAttribute('text-anchor', 'middle');
     overlayTitle.setAttribute('dominant-baseline', 'middle');
     overlayTitle.setAttribute('font-family', 'Segoe UI, system-ui, sans-serif');
-    overlayTitle.setAttribute('font-size', '7.2');
+    overlayTitle.setAttribute('font-size', '10');
     overlayTitle.setAttribute('font-weight', 'bold');
     overlayTitle.setAttribute('fill', '#0d0d14');
     overlayGroup.appendChild(overlayTitle);
 
     /* Body text uses foreignObject for wrapping */
     const fo = document.createElementNS('http://www.w3.org/2000/svg', 'foreignObject');
+    fo.setAttribute('x', '14');
+    fo.setAttribute('y', '118');
+    fo.setAttribute('width', '182');
+    fo.setAttribute('height', '160');
     const foDiv = document.createElement('div');
     foDiv.setAttribute('xmlns', 'http://www.w3.org/1999/xhtml');
     foDiv.id = 'overlayBody';
-    foDiv.style.cssText = 'font-family:Segoe UI,system-ui,sans-serif;font-size:6.1px;color:#16161f;line-height:1.35;text-align:center;';
+    foDiv.style.cssText = 'font-family:Segoe UI,system-ui,sans-serif;font-size:8px;color:#16161f;line-height:1.55;text-align:center;';
     fo.appendChild(foDiv);
     overlayGroup.appendChild(fo);
 
     /* Congratulations final text */
     const congratsText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
     congratsText.setAttribute('id', 'congratsText');
+    congratsText.setAttribute('x', '105');
+    congratsText.setAttribute('y', '148');
     congratsText.setAttribute('text-anchor', 'middle');
     congratsText.setAttribute('dominant-baseline', 'middle');
     congratsText.setAttribute('font-family', 'Segoe UI, system-ui, sans-serif');
-    congratsText.setAttribute('font-size', '7');
+    congratsText.setAttribute('font-size', '9');
     congratsText.setAttribute('font-weight', 'bold');
     congratsText.setAttribute('fill', '#0d0d14');
     congratsText.style.display = 'none';
     overlayGroup.appendChild(congratsText);
 
-    let overlayCenterX = 105;
-    let overlayLineGap = 9;
-
-    function configureOverlayLayout() {
-      const monitorScreen = document.getElementById('path854-0');
-      let x = 44;
-      let y = 75;
-      let width = 122;
-      let height = 70;
-
-      if (monitorScreen) {
-        const screenBox = monitorScreen.getBBox();
-        const padX = screenBox.width * 0.085;
-        const padY = screenBox.height * 0.18;
-        x = screenBox.x + padX;
-        y = screenBox.y + padY;
-        width = screenBox.width - (padX * 2);
-        height = screenBox.height - (padY * 2);
-      }
-
-      overlayCenterX = x + (width / 2);
-      overlayLineGap = Math.max(8, height * 0.13);
-
-      overlayRect.setAttribute('x', `${x}`);
-      overlayRect.setAttribute('y', `${y}`);
-      overlayRect.setAttribute('width', `${width}`);
-      overlayRect.setAttribute('height', `${height}`);
-      overlayRect.setAttribute('rx', `${Math.max(5, width * 0.08)}`);
-      overlayRect.setAttribute('ry', `${Math.max(5, height * 0.12)}`);
-
-      overlayTitle.setAttribute('x', `${overlayCenterX}`);
-      overlayTitle.setAttribute('y', `${y + (height * 0.24)}`);
-
-      fo.setAttribute('x', `${x + (width * 0.08)}`);
-      fo.setAttribute('y', `${y + (height * 0.35)}`);
-      fo.setAttribute('width', `${width * 0.84}`);
-      fo.setAttribute('height', `${height * 0.56}`);
-
-      congratsText.setAttribute('x', `${overlayCenterX}`);
-      congratsText.setAttribute('y', `${y + (height * 0.43)}`);
-    }
-
     svgEl.appendChild(overlayGroup);
-    configureOverlayLayout();
 
     function showOverlay(isCongrats) {
       const overlay = document.getElementById('svgOverlay');
@@ -468,11 +437,11 @@
         /* second line via tspan */
         congrats.textContent = '';
         const line1 = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
-        line1.setAttribute('x', `${overlayCenterX}`); line1.setAttribute('dy', '0'); line1.textContent = 'CONGRATULATIONS';
+        line1.setAttribute('x', '105'); line1.setAttribute('dy', '0'); line1.textContent = 'CONGRATULATIONS';
         const line2 = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
-        line2.setAttribute('x', `${overlayCenterX}`); line2.setAttribute('dy', `${overlayLineGap}`); line2.textContent = 'YOU FIND YOUR';
+        line2.setAttribute('x', '105'); line2.setAttribute('dy', '14'); line2.textContent = 'YOU FIND YOUR';
         const line3 = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
-        line3.setAttribute('x', `${overlayCenterX}`); line3.setAttribute('dy', `${overlayLineGap}`); line3.textContent = 'NEW PRODUCER';
+        line3.setAttribute('x', '105'); line3.setAttribute('dy', '14'); line3.textContent = 'NEW PRODUCER';
         congrats.appendChild(line1); congrats.appendChild(line2); congrats.appendChild(line3);
       } else {
         titleEl.style.display = '';
