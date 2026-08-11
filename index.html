@@ -314,36 +314,44 @@
   <!-- Anime.js v3 CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js" integrity="sha512-aNMyYYxdIxIaot0Y1/PLuEu3eipGCmsEUBrUq+7aVyDGk2z3C1W6KMvXTCWYcNkux2OtSWzNLrz+ZFpBrUPQ==" crossorigin="anonymous" referrerpolicy="no-referrer" onerror="document.querySelectorAll('header,#scene,#statusBadge,#ctaArea,#aboutSection,#footer').forEach(el=>el.style.opacity='1')"></script>
   <script>
-    /* ── Intro stagger ── */
-    const introTargets = ['header', '#scene', '#statusBadge', '#ctaArea', '#aboutSection', '#footer'];
-    anime({
-      targets: introTargets,
-      opacity: [0, 1],
-      translateY: [24, 0],
-      duration: 700,
-      delay: anime.stagger(120, { start: 200 }),
-      easing: 'easeOutQuart'
-    });
+    const hasAnime = typeof window.anime === 'function';
 
-    /* ── Pulse dot ── */
-    anime({
-      targets: '#pulseDot',
-      scale: [1, 1.6, 1],
-      opacity: [1, 0.4, 1],
-      duration: 1400,
-      loop: true,
-      easing: 'easeInOutSine'
-    });
+    if (hasAnime) {
+      /* ── Intro stagger ── */
+      const introTargets = ['header', '#scene', '#statusBadge', '#ctaArea', '#aboutSection', '#footer'];
+      anime({
+        targets: introTargets,
+        opacity: [0, 1],
+        translateY: [24, 0],
+        duration: 700,
+        delay: anime.stagger(120, { start: 200 }),
+        easing: 'easeOutQuart'
+      });
 
-    /* ── Scene gentle levitation ── */
-    anime({
-      targets: '#scene',
-      translateY: [0, -8, 0],
-      duration: 4000,
-      loop: true,
-      easing: 'easeInOutSine',
-      delay: 900
-    });
+      /* ── Pulse dot ── */
+      anime({
+        targets: '#pulseDot',
+        scale: [1, 1.6, 1],
+        opacity: [1, 0.4, 1],
+        duration: 1400,
+        loop: true,
+        easing: 'easeInOutSine'
+      });
+
+      /* ── Scene gentle levitation ── */
+      anime({
+        targets: '#scene',
+        translateY: [0, -8, 0],
+        duration: 4000,
+        loop: true,
+        easing: 'easeInOutSine',
+        delay: 900
+      });
+    } else {
+      document.querySelectorAll('header,#scene,#statusBadge,#ctaArea,#aboutSection,#footer').forEach((el) => {
+        el.style.opacity = '1';
+      });
+    }
 
     /* ── Interactive desk drawers ── */
     const drawerIds = ['path843', 'path845'];
@@ -357,14 +365,16 @@
 
       drawer.addEventListener('click', () => {
         drawer.classList.toggle('is-active');
-        anime.remove(drawer);
-        anime({
-          targets: drawer,
-          scale: [1, 1.06, 1],
-          translateY: [0, -3, 0],
-          duration: 420,
-          easing: 'easeOutBack'
-        });
+        if (hasAnime) {
+          anime.remove(drawer);
+          anime({
+            targets: drawer,
+            scale: [1, 1.06, 1],
+            translateY: [0, -3, 0],
+            duration: 420,
+            easing: 'easeOutBack'
+          });
+        }
       });
     });
   </script>
