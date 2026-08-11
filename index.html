@@ -310,17 +310,19 @@
 
       drawerIds.forEach((drawerId) => {
         const drawer = svgDocument.getElementById(drawerId);
-        if (!drawer) return;
+        if (!drawer || drawer.dataset.drawerBound === 'true') return;
 
+        drawer.dataset.drawerBound = 'true';
         drawer.style.cursor = 'pointer';
         drawer.style.transformBox = 'fill-box';
         drawer.style.transformOrigin = 'center';
 
         drawer.addEventListener('click', () => {
+          const currentFill = drawer.style.fill || drawer.getAttribute('fill') || '#0d0d14';
           anime.remove(drawer);
           anime({
             targets: drawer,
-            fill: [drawer.getAttribute('fill') || '#0d0d14', salmonFill],
+            fill: [currentFill, salmonFill],
             scale: [1, 1.03, 1],
             duration: 360,
             easing: 'easeOutQuad'
@@ -329,11 +331,20 @@
       });
     }
 
-    if (sceneIllustration) {
-      sceneIllustration.addEventListener('load', setupInteractiveDrawers);
-      if (sceneIllustration.contentDocument?.readyState === 'complete') {
+    function initializeDrawersWhenReady() {
+      const svgDocument = sceneIllustration.contentDocument;
+      if (!svgDocument) return;
+
+      if (svgDocument.readyState === 'loading') {
+        svgDocument.addEventListener('DOMContentLoaded', setupInteractiveDrawers, { once: true });
+      } else {
         setupInteractiveDrawers();
       }
+    }
+
+    if (sceneIllustration) {
+      sceneIllustration.addEventListener('load', setupInteractiveDrawers);
+      initializeDrawersWhenReady();
     }
   </script>
 </body>
