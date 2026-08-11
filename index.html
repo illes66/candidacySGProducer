@@ -353,6 +353,133 @@
       });
     }
 
+    /* ── Drawer texts ── */
+    const drawerTexts = [
+      { title: 'GameDev / Producer / Unity', body: 'I started in GameDev as a programmer and moved into production, combining hands-on Unity experience with 10+ years in game production.' },
+      { title: 'Cross-functional teams', body: 'I have led cross-functional teams across Design, Programming, Art, QA, UI, SFX and VFX, including a 23-person art team at 2K.' },
+      { title: 'Prototyping & fast iteration', body: 'I build small game experiences and prototypes in Unity, focusing on testing ideas quickly and iterating through hands-on development.' },
+      { title: 'Mechanics / player experience / game feel', body: 'My production experience has always involved balancing technical constraints, product goals and player experience across different games and platforms.' },
+      { title: 'Fast-paced R&D / testing & decisions', body: 'I am comfortable working with changing priorities, identifying risks quickly and using feedback to decide what to improve, change or stop.' },
+      { title: 'Solo development / building small teams', body: 'I currently develop my own small experiences and have a network of industry contacts to build small development teams when needed.' },
+      { title: 'AI-assisted development', body: 'I actively explore modern AI tools to speed up ideation, prototyping and development while keeping the creative and production decisions human-led.' },
+      { title: 'Market research / adapting ideas', body: 'I enjoy researching games, competitors and successful gameplay patterns, then using those references to explore new ideas and directions.' },
+    ];
+    let textIndex = 0;
+    let overlayTimeout = null;
+
+    /* ── Inject SVG overlay group ── */
+    const svgEl = document.getElementById('sceneIllustration');
+    const overlayGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    overlayGroup.setAttribute('id', 'svgOverlay');
+    overlayGroup.style.opacity = '0';
+    overlayGroup.style.pointerEvents = 'none';
+
+    const overlayRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    overlayRect.setAttribute('x', '0');
+    overlayRect.setAttribute('y', '0');
+    overlayRect.setAttribute('width', '210');
+    overlayRect.setAttribute('height', '297');
+    overlayRect.setAttribute('fill', 'white');
+    overlayGroup.appendChild(overlayRect);
+
+    const overlayTitle = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    overlayTitle.setAttribute('id', 'overlayTitle');
+    overlayTitle.setAttribute('x', '105');
+    overlayTitle.setAttribute('y', '100');
+    overlayTitle.setAttribute('text-anchor', 'middle');
+    overlayTitle.setAttribute('dominant-baseline', 'middle');
+    overlayTitle.setAttribute('font-family', 'Segoe UI, system-ui, sans-serif');
+    overlayTitle.setAttribute('font-size', '10');
+    overlayTitle.setAttribute('font-weight', 'bold');
+    overlayTitle.setAttribute('fill', '#0d0d14');
+    overlayGroup.appendChild(overlayTitle);
+
+    /* Body text uses foreignObject for wrapping */
+    const fo = document.createElementNS('http://www.w3.org/2000/svg', 'foreignObject');
+    fo.setAttribute('x', '14');
+    fo.setAttribute('y', '118');
+    fo.setAttribute('width', '182');
+    fo.setAttribute('height', '160');
+    const foDiv = document.createElement('div');
+    foDiv.setAttribute('xmlns', 'http://www.w3.org/1999/xhtml');
+    foDiv.id = 'overlayBody';
+    foDiv.style.cssText = 'font-family:Segoe UI,system-ui,sans-serif;font-size:8px;color:#16161f;line-height:1.55;text-align:center;';
+    fo.appendChild(foDiv);
+    overlayGroup.appendChild(fo);
+
+    /* Congratulations final text */
+    const congratsText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    congratsText.setAttribute('id', 'congratsText');
+    congratsText.setAttribute('x', '105');
+    congratsText.setAttribute('y', '148');
+    congratsText.setAttribute('text-anchor', 'middle');
+    congratsText.setAttribute('dominant-baseline', 'middle');
+    congratsText.setAttribute('font-family', 'Segoe UI, system-ui, sans-serif');
+    congratsText.setAttribute('font-size', '9');
+    congratsText.setAttribute('font-weight', 'bold');
+    congratsText.setAttribute('fill', '#0d0d14');
+    congratsText.style.display = 'none';
+    overlayGroup.appendChild(congratsText);
+
+    svgEl.appendChild(overlayGroup);
+
+    function showOverlay(isCongrats) {
+      const overlay = document.getElementById('svgOverlay');
+      const titleEl = document.getElementById('overlayTitle');
+      const bodyEl = document.getElementById('overlayBody');
+      const congrats = document.getElementById('congratsText');
+
+      if (isCongrats) {
+        titleEl.style.display = 'none';
+        fo.style.display = 'none';
+        congrats.style.display = '';
+        congrats.textContent = 'CONGRATULATIONS';
+        /* second line via tspan */
+        congrats.textContent = '';
+        const line1 = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
+        line1.setAttribute('x', '105'); line1.setAttribute('dy', '0'); line1.textContent = 'CONGRATULATIONS';
+        const line2 = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
+        line2.setAttribute('x', '105'); line2.setAttribute('dy', '14'); line2.textContent = 'YOU FIND YOUR';
+        const line3 = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
+        line3.setAttribute('x', '105'); line3.setAttribute('dy', '14'); line3.textContent = 'NEW PRODUCER';
+        congrats.appendChild(line1); congrats.appendChild(line2); congrats.appendChild(line3);
+      } else {
+        titleEl.style.display = '';
+        fo.style.display = '';
+        congrats.style.display = 'none';
+        const entry = drawerTexts[textIndex];
+        titleEl.textContent = entry.title;
+        bodyEl.textContent = entry.body;
+        textIndex++;
+      }
+
+      if (hasAnime) {
+        anime.remove(overlay);
+        anime({
+          targets: overlay,
+          opacity: [0, 1],
+          duration: 200,
+          easing: 'easeOutQuad'
+        });
+      } else {
+        overlay.style.opacity = '1';
+      }
+
+      if (overlayTimeout) clearTimeout(overlayTimeout);
+      overlayTimeout = setTimeout(() => {
+        if (hasAnime) {
+          anime({
+            targets: overlay,
+            opacity: 0,
+            duration: 300,
+            easing: 'easeInQuad'
+          });
+        } else {
+          overlay.style.opacity = '0';
+        }
+      }, 1500);
+    }
+
     /* ── Interactive desk drawers ── */
     const drawerIds = ['path843', 'path845'];
 
@@ -363,8 +490,15 @@
       drawer.style.transformBox = 'fill-box';
       drawer.style.transformOrigin = 'center';
 
+      let resetTimeout = null;
+
       drawer.addEventListener('click', () => {
-        drawer.classList.toggle('is-active');
+        drawer.classList.add('is-active');
+        if (resetTimeout) clearTimeout(resetTimeout);
+        resetTimeout = setTimeout(() => {
+          drawer.classList.remove('is-active');
+        }, 1500);
+
         if (hasAnime) {
           anime.remove(drawer);
           anime({
@@ -374,6 +508,12 @@
             duration: 420,
             easing: 'easeOutBack'
           });
+        }
+
+        if (textIndex < drawerTexts.length) {
+          showOverlay(false);
+        } else {
+          showOverlay(true);
         }
       });
     });
