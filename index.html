@@ -280,10 +280,19 @@
           </g>
         </g>
       </svg>
+      <!-- Destello frame 1 (cyan/pink brush strokes) -->
       <img
         id="drawerFlash"
         class="drawer-flash"
-        src="https://github.com/user-attachments/assets/388b2a5d-cd64-466d-8b01-20a339702d74"
+        src="https://github.com/user-attachments/assets/e49fafe8-8a7a-41d5-ab83-13a2ef009e73"
+        alt=""
+        aria-hidden="true"
+      />
+      <!-- Destello frame 2 (blue/yellow brush strokes) -->
+      <img
+        id="drawerFlash2"
+        class="drawer-flash"
+        src="https://github.com/user-attachments/assets/d59501a3-7195-43a5-b41d-84e7e80641a3"
         alt=""
         aria-hidden="true"
       />
@@ -447,39 +456,60 @@
 
     svgEl.appendChild(overlayGroup);
 
-    const drawerFlash = document.getElementById('drawerFlash');
+    const drawerFlash  = document.getElementById('drawerFlash');
+    const drawerFlash2 = document.getElementById('drawerFlash2');
 
     function playDrawerFlash(drawer) {
-      if (!drawerFlash) return;
+      if (!drawerFlash || !drawerFlash2) return;
 
- const sceneRect = document.getElementById('scene').getBoundingClientRect();
-const screenRect = document.getElementById('path854-0').getBoundingClientRect();
+      const sceneRect  = document.getElementById('scene').getBoundingClientRect();
+      const screenRect = document.getElementById('path854-0').getBoundingClientRect();
+      const cx = `${screenRect.left + (screenRect.width  / 2) - sceneRect.left}px`;
+      const cy = `${screenRect.top  + (screenRect.height / 2) - sceneRect.top}px`;
 
-drawerFlash.style.left = `${screenRect.left + (screenRect.width / 2) - sceneRect.left}px`;
-drawerFlash.style.top = `${screenRect.top + (screenRect.height / 2) - sceneRect.top}px`;
+      // Position both frames centred on the monitor screen
+      drawerFlash.style.left  = cx;  drawerFlash.style.top  = cy;
+      drawerFlash2.style.left = cx;  drawerFlash2.style.top = cy;
 
+      // ── Animation: frame1 fades in first, then frame2 takes over, then both out.
+      // Total duration = 600 ms split in two halves (300 ms each).
+      // To adjust timing, change the duration values below.
       if (hasAnime) {
-        anime.remove(drawerFlash);
+        anime.remove([drawerFlash, drawerFlash2]);
+        // Frame 1: in → visible → starts fading before frame 2 takes over
         anime({
           targets: drawerFlash,
           opacity: [0, 1, 0],
-          scale: [1, 1, 1],
-          duration: 500,
+          duration: 400,           // ← duration of frame 1 in ms
+          easing: 'easeInOutSine'
+        });
+        // Frame 2: starts halfway through, fades in then out
+        anime({
+          targets: drawerFlash2,
+          opacity: [0, 1, 0],
+          duration: 400,           // ← duration of frame 2 in ms
+          delay: 200,              // ← delay before frame 2 appears (overlap point)
           easing: 'easeInOutSine'
         });
       } else {
+        // Fallback (no anime.js): frame1 then frame2 sequentially
         drawerFlash.animate(
           [
-            { opacity: 0, transform: 'translate(-50%, -50%) scale(0.82)' },
-            { opacity: 1, transform: 'translate(-50%, -50%) scale(1)' },
-            { opacity: 0, transform: 'translate(-50%, -50%) scale(0.92)' }
+            { opacity: 0, transform: 'translate(-50%,-50%) scale(0.85)' },
+            { opacity: 1, transform: 'translate(-50%,-50%) scale(1)' },
+            { opacity: 0, transform: 'translate(-50%,-50%) scale(0.9)' }
           ],
-          {
-            duration: 500,
-            easing: 'ease-in-out',
-            fill: 'forwards'
-          }
-        );
+          { duration: 300, easing: 'ease-in-out', fill: 'forwards' }
+        ).onfinish = () => {
+          drawerFlash2.animate(
+            [
+              { opacity: 0, transform: 'translate(-50%,-50%) scale(0.85)' },
+              { opacity: 1, transform: 'translate(-50%,-50%) scale(1)' },
+              { opacity: 0, transform: 'translate(-50%,-50%) scale(0.9)' }
+            ],
+            { duration: 300, easing: 'ease-in-out', fill: 'forwards' }
+          );
+        };
       }
     }
 
