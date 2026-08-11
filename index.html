@@ -384,14 +384,16 @@
 
     const overlayTitle = document.createElementNS('http://www.w3.org/2000/svg', 'text');
     overlayTitle.setAttribute('id', 'overlayTitle');
-    overlayTitle.setAttribute('x', '50');
+    overlayTitle.setAttribute('x', '60');
     overlayTitle.setAttribute('y', '50');
     overlayTitle.setAttribute('text-anchor', 'middle');
     overlayTitle.setAttribute('dominant-baseline', 'middle');
     overlayTitle.setAttribute('font-family', 'Segoe UI, system-ui, sans-serif');
-    overlayTitle.setAttribute('font-size', '7');
+    overlayTitle.setAttribute('font-size', '9');
     overlayTitle.setAttribute('font-weight', 'bold');
     overlayTitle.setAttribute('fill', '#0d0d14');
+       overlayTitle.setAttribute('fill', 'salmon');
+
     overlayGroup.appendChild(overlayTitle);
 
     /* Body text uses foreignObject for wrapping */
