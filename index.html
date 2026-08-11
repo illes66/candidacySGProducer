@@ -88,8 +88,8 @@
 
     .drawer-flash {
       position: absolute;
-      width: 34%;
-      max-width: 200px;
+      width: 54%;
+      max-width: 400px;
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
@@ -452,10 +452,11 @@
     function playDrawerFlash(drawer) {
       if (!drawerFlash) return;
 
-      const sceneRect = document.getElementById('scene').getBoundingClientRect();
-      const drawerRect = drawer.getBoundingClientRect();
-      drawerFlash.style.left = `${drawerRect.left + (drawerRect.width / 2) - sceneRect.left}px`;
-      drawerFlash.style.top = `${drawerRect.top + (drawerRect.height / 2) - sceneRect.top}px`;
+ const sceneRect = document.getElementById('scene').getBoundingClientRect();
+const screenRect = document.getElementById('path854-0').getBoundingClientRect();
+
+drawerFlash.style.left = `${screenRect.left + (screenRect.width / 2) - sceneRect.left}px`;
+drawerFlash.style.top = `${screenRect.top + (screenRect.height / 2) - sceneRect.top}px`;
 
       if (hasAnime) {
         anime.remove(drawerFlash);
